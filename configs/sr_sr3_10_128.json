@@ -1,0 +1,108 @@
+{
+    "name": "sr_ffhq_10",
+    "phase": "train",
+    "gpu_ids": [
+        0
+    ],
+    "path": {
+        "log": "logs",
+        "tb_logger": "tb_logger",
+        "results": "results",
+        "checkpoint": "checkpoints",
+        "resume_state": null
+    },
+    "datasets": {
+        "train": {
+            "name": "FFHQ",
+            "mode": "HR",
+            "dataroot": "../data_root/train_mat_10",
+            "datatype": "img",
+            "l_resolution": 64,
+            "r_resolution": 64,
+            "batch_size": 16,
+            "num_workers": 8,
+            "use_shuffle": true,
+            "data_len": -1
+        },
+        "val": {
+            "name": "CelebaHQ",
+            "mode": "LRHR",
+            "dataroot": "../data_root/test_mat_10",
+            "datatype": "img",
+            "l_resolution": 64,
+            "r_resolution": 64,
+            "data_len": -1
+        }
+    },
+    "model": {
+        "which_model_G": "sr3",
+        "finetune_norm": false,
+        "unet": {
+            "PreNet": {
+                "in_channel": 1,
+                "out_channel": 1,
+                "inner_channel": 64,
+                "channel_multiplier": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "attn_res": [],
+                "res_blocks": 3,
+                "dropout": 0
+            },
+            "DenoiseNet": {
+                "in_channel": 2,
+                "out_channel": 1,
+                "inner_channel": 32,
+                "channel_multiplier": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "attn_res": [],
+                "res_blocks": 3,
+                "dropout": 0
+            }
+        },
+        "beta_schedule": {
+            "train": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-06,
+                "linear_end": 0.01
+            },
+            "val": {
+                "schedule": "linear",
+                "n_timestep": 10,
+                "linear_start": 1e-06,
+                "linear_end": 0.5
+            }
+        },
+        "diffusion": {
+            "image_size": 128,
+            "channels": 1,
+            "conditional": true
+        }
+    },
+    "train": {
+        "n_iter": 125000,
+        "val_freq": 2500,
+        "save_checkpoint_freq": 12500,
+        "print_freq": 200,
+        "optimizer": {
+            "type": "adam",
+            "lr": 0.0001
+        },
+        "ema_scheduler": {
+            "step_start_ema": 5000,
+            "update_ema_every": 1,
+            "ema_decay": 0.9999
+        }
+    },
+    "wandb": {
+        "project": "sr_ffhq_10"
+    }
+}

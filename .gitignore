@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Data, preprocessed caches and model weights are not part of this repo
+data_root/*
+!data_root/.gitkeep
+preload/
+normalize_scales/
+checkpoints/*
+!checkpoints/.gitkeep
+outputs/*
+!outputs/.gitkeep
+experiments/
+logs/
+tb_logger/
+*.pth
+*.pt
+*.mat
+*.npy
+*.img
+*.mhd
+*.raw
+
+# Editor
+.vscode/
+.idea/
+.DS_Store

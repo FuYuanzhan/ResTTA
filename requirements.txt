@@ -1,0 +1,19 @@
+# Core
+torch>=1.10
+torchvision
+numpy
+scipy
+
+# Medical imaging I/O and metrics
+SimpleITK
+medpy
+scikit-image
+opencv-python
+
+# Utilities
+tqdm
+Pillow
+tensorboardX
+
+# Optional: experiment tracking used by train.py -enable_wandb
+# wandb
